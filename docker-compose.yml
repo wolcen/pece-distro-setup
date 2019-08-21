@@ -52,13 +52,13 @@ services:
       - 'traefik.port=80'
       - traefik.frontend.rule=Host:${PROJECT_BASE_URL},190.15.132.25
 
-#  mailhog:
-#    image: mailhog/mailhog
-#    container_name: "${PROJECT_NAME}_mailhog"
-#    labels:
-#      - 'traefik.backend=${PROJECT_NAME}_mailhog'
-#      - 'traefik.port=8025'
-#      - 'traefik.frontend.rule=Host:mailhog.${PROJECT_BASE_URL}'
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "${PROJECT_NAME}_mailhog"
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}_mailhog'
+      - 'traefik.port=8025'
+      - 'traefik.frontend.rule=Host:mailhog.${PROJECT_BASE_URL}'
 
 #  postgres:
 #    image: wodby/postgres:$POSTGRES_TAG
