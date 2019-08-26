@@ -2,6 +2,14 @@
 
 Automate server setup for new instances of PECE using Docker and Docker-Compose.
 
+---------------------
+
+## Requirements
+  * [Git](https://git-scm.com/)
+  * [Docker](https://docker.com/)
+  * [Docker Compose](https://docs.docker.com/compose/)
+
+
 ## Installation & Setup
 
 - Download/Clone this repository on your server to the desired folder
