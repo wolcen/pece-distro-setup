@@ -10,15 +10,15 @@ Automate server setup for new instances of PECE using Docker and Docker-Compose.
 git clone https://github.com/PECE-project/pece-distro-setup.git <your-pece-instance-directory-name>
 ```
 
-- Enter <your-pece-instance-direcotry-name> directory: 
+- Enter `<your-pece-instance-directory-name>` directory: 
 
 ```bash
 cd <your-pece-instance-directory-name>
 ```
 
-- Copy and rename `.env.example` file to `.env`
+- Copy `.env.example` file and rename it to `.env`
 
-- Edit your new `.env` file and set the followiong variables accourding to your needs.
+- Edit your new `.env` file and set the following variables according to your needs.
 
 Ex.: 
 
@@ -42,9 +42,9 @@ DB_ROOT_PASSWORD=<put-a-strong-password-here>
 make up
 ```
 
-- Download/Clone (PECE Distribution)[https://github.com/PECE-project/pece-distro] into a new dir named `web` by running the following:
+- Download/Clone [PECE Distribution](https://github.com/PECE-project/pece-distro) into a new dir named `web` by running the following:
 
 ```bash
 git clone https://github.com/PECE-project/pece-distro.git web
 ```
-- Access http://<your-pece-instance-name.com> on your browser and proceed with installation of your new instance of PECE.
+- Access http://`<your-pece-instance-name.com>` on your browser and proceed with installation of your new instance of PECE.
