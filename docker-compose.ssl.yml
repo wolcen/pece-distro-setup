@@ -12,6 +12,8 @@ services:
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.service=${PROJECT_NAME}_nginx"
 
   traefik:
+    environment:
+      SYSADMIN_MAIL: ${SYSADMIN_MAIL}
     ports:
       - '443:443'
     command: "--certificatesresolvers.letsencrypt.acme.email=${SYSADMIN_MAIL}"
