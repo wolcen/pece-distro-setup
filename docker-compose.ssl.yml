@@ -18,10 +18,12 @@ services:
     labels:
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_ACCESS_HASH}"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${PROJECT_BASE_URL}`)"
       - "traefik.http.routers.traefik-secure.service=api@internal"
       - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt"
     volumes:
       - ./docker/traefik/traefik.yaml:/traefik.yaml:ro
