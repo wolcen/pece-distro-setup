@@ -18,6 +18,7 @@ endif
 .PHONY: up
 up:
 	@echo "Starting up containers for $(PROJECT_NAME) with ssl"
+	chmod 600 database/traefik/acme.json
 	docker-compose pull
 	docker-compose -f docker-compose.yml -f docker-compose.ssl.yml up -d --remove-orphans
 

@@ -14,7 +14,7 @@ services:
   traefik:
     ports:
       - '443:443'
-    command: --certificatesresolvers.letsencrypt.acme.email=${SYSADMIN_MAIL}
+    command: "--certificatesresolvers.letsencrypt.acme.email=${SYSADMIN_MAIL}"
     labels:
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
