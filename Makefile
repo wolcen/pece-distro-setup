@@ -16,6 +16,14 @@ install:
 	make up
 	@echo "Finish Install $(PROJECT_NAME)"
 
+update:
+	@echo "Update $(PROJECT_NAME)..."
+	docker-compose -f docker-compose.commands.yml up -d update-project
+	docker-compose -f docker-compose.commands.yml exec update-project git pull origin master
+	docker-compose -f docker-compose.commands.yml exec update-project drush updb -y
+	docker-compose -f docker-compose.commands.yml stop update-project
+	@echo "Finish Install $(PROJECT_NAME)"
+
 ## no-ssl-up	:	Start up containers without ssl.
 .PHONY: no-ssl-up
 no-ssl-up:

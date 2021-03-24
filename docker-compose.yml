@@ -57,7 +57,7 @@ services:
     image: traefik:v2.2
     restart: always
     container_name: "${PROJECT_NAME}_traefik"
-    command: --api.insecure=true --providers.docker --log.level=DEBUG
+    command: --api.insecure=true --providers.docker
     security_opt:
       - no-new-privileges:true
     ports:

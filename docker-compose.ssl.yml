@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   nginx:
     labels:
       - "traefik.http.middlewares.${PROJECT_NAME}_nginx-https-redirect.redirectscheme.scheme=https"
@@ -15,6 +14,7 @@ services:
   traefik:
     ports:
       - '443:443'
+    command: --certificatesresolvers.letsencrypt.acme.email=${SYSADMIN_MAIL}
     labels:
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
