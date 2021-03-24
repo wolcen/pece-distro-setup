@@ -1,6 +1,6 @@
 include docker.mk
 
-.PHONY: test build
+.PHONY: test install no-ssl-up
 
 DRUPAL_VER ?= 7
 PHP_VER ?= 7.2
@@ -15,4 +15,11 @@ install:
 	docker-compose -f docker-compose.commands.yml up git-clone
 	make up
 	@echo "Finish Install $(PROJECT_NAME)"
+
+## no-ssl-up	:	Start up containers without ssl.
+.PHONY: no-ssl-up
+no-ssl-up:
+	@echo "Starting up containers for $(PROJECT_NAME) without ssl"
+	docker-compose pull
+	docker-compose up -d --remove-orphans
 

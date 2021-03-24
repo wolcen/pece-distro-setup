@@ -17,9 +17,9 @@ endif
 ## up	:	Start up containers.
 .PHONY: up
 up:
-	@echo "Starting up containers for $(PROJECT_NAME)..."
+	@echo "Starting up containers for $(PROJECT_NAME) with ssl"
 	docker-compose pull
-	docker-compose up -d --remove-orphans
+	docker-compose -f docker-compose.yml -f docker-compose.ssl.yml up -d --remove-orphans
 
 .PHONY: mutagen
 mutagen:
