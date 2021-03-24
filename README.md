@@ -5,7 +5,7 @@ Automate server setup for new instances of PECE using Docker and Docker-Compose.
 ---------------------
 
 ## Requirements
-  * [Git](https://git-scm.com/)
+  * Make
   * [Docker](https://docker.com/)
   * [Docker Compose](https://docs.docker.com/compose/)
 
@@ -47,12 +47,27 @@ DB_ROOT_PASSWORD=<put-a-strong-password-here>
 - Run the following command to install and start all services required for you PECE instance and go grab a tea/coffee because it might take some time.
 
 ```bash
+make install
+```
+
+- Access http://`<your-pece-instance-name.com>` on your browser and proceed with installation of your new instance of PECE.
+
+## Others commands
+```shell
 make up
 ```
+If you need up the project only, no install.
 
-- Download/Clone [PECE Distribution](https://github.com/PECE-project/pece-distro) into a new dir named `web` by running the following:
-
-```bash
-git clone https://github.com/PECE-project/pece-distro.git web
+---
+```shell
+make stop
 ```
-- Access http://`<your-pece-instance-name.com>` on your browser and proceed with installation of your new instance of PECE.
+If you need stop the project
+
+---
+```shell
+make update
+```
+If you need update project with new version
+
+See Makefile and docker.mk to see others commands.
