@@ -78,6 +78,19 @@ drush:
 logs:
 	@docker-compose logs -f $(filter-out $@,$(MAKECMDGOALS))
 
+## cert-test	:	Test generation of SSL certificate using `certbot`.
+.PHONY: cert-test
+cert-test:
+	@echo "Testing SSL certificate setup for $(PROJECT_NAME)"
+	docker-compose -f docker-compose.yml -f docker-compose.certbot.yml run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d $(PROJECT_BASE_URL)
+
+## cert	:	Generate SSL certificate with letsencrypt `certbot certonly` command.
+.PHONY: cert
+cert:
+	@echo "Creating SSL certificate $(PROJECT_NAME)"
+	docker-compose -f docker-compose.yml -f docker-compose.certbot.yml run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ -d $(PROJECT_BASE_URL)
+
+
 # https://stackoverflow.com/a/6273809/1826109
 %:
 	@:
