@@ -3,7 +3,7 @@ include docker.mk
 .PHONY: test install no-ssl-up
 
 DRUPAL_VER ?= 7
-PHP_VER ?= 7.2
+PHP_VER ?= 8.1
 
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 
