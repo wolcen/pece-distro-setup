@@ -30,3 +30,4 @@ services:
     volumes:
       - ./docker/traefik/traefik.yaml:/traefik.yaml:ro
       - ./docker/traefik/acme.json:/acme.json
+
