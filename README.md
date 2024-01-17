@@ -70,4 +70,10 @@ make update
 ```
 If you need update project with new version
 
+---
+```shell
+make cert
+```
+If you need to generate a SSL certificate
+
 See Makefile and docker.mk to see others commands.
