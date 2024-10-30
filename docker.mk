@@ -14,7 +14,7 @@ help : Makefile
 	@sed -n 's/^##//p' $<
 endif
 
-## up	:	Start up containers.
+## up	:	Start containers.
 .PHONY: up
 up:
 	@echo "Starting up containers for $(PROJECT_NAME) with ssl"

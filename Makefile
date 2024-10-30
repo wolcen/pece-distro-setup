@@ -1,21 +1,25 @@
 include docker.mk
 
-.PHONY: test install no-ssl-up
-
-DRUPAL_VER ?= 7
-PHP_VER ?= 8.1
+DRUPAL_VER ?= 8
+PHP_VER ?= 8.2
 
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 
+## test	:	Run automated tests.
+.PHONY: test
 test:
 	cd ./tests/$(DRUPAL_VER) && PHP_VER=$(PHP_VER) ./run.sh
 
+## install	:	Install PECE.
+.PHONY: install
 install:
 	@echo "Install $(PROJECT_NAME)..."
 	docker-compose -f docker-compose.commands.yml up git-clone
 	make up
 	@echo "Finish Install $(PROJECT_NAME)"
 
+## update	:	Update PECE with latest available release.
+.PHONY: update
 update:
 	@echo "Update $(PROJECT_NAME)..."
 	docker-compose -f docker-compose.commands.yml up -d update-project
