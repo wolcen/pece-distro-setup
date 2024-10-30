@@ -54,7 +54,7 @@ services:
       - "traefik.http.services.${PROJECT_NAME}_nginx.loadbalancer.server.port=80"
 
   traefik:
-    image: traefik:v2.2
+    image: traefik:v3.2.0
     restart: always
     container_name: "${PROJECT_NAME}_traefik"
     command: --api.insecure=true --providers.docker
