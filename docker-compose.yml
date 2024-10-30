@@ -73,3 +73,23 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
+#  solr:
+#    image: wodby/solr:$SOLR_TAG
+#    container_name: "${PROJECT_NAME}_solr"
+#    environment:
+#      SOLR_DEFAULT_CONFIG_SET: $SOLR_CONFIG_SET
+#      SOLR_HEAP: 1024m
+#    labels:
+#      - 'traefik.backend=${PROJECT_NAME}_solr'
+#      - 'traefik.port=8983'
+#      - 'traefik.frontend.rule=Host:solr.${PROJECT_BASE_URL}'
+
+#  elasticsearch:
+#    image: wodby/elasticsearch:$ELASTICSEARCH_TAG
+#    container_name: "${PROJECT_NAME}_elasticsearch"
+#    environment:
+#      ES_JAVA_OPTS: "-Xms500m -Xmx500m"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
