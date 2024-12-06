@@ -55,6 +55,7 @@ help : $(wildcard Makefile docker.mk)
 up:
 	@echo "Starting up containers for $(PROJECT_NAME)..."
 	chmod 600 docker/traefik/acme.json
+	chmod 600 docker/traefik/acme-test.json
 	docker compose -f compose.yml -f compose.ssl.yml up -d --remove-orphans
 
 .PHONY: mutagen
