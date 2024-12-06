@@ -1,4 +1,7 @@
 docker/database/data/
+docker/files/
 pece-distro
 .env
-.idea
+.idea/
+mutagen.yml.lock
+.vscode

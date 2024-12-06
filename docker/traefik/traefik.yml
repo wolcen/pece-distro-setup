@@ -1,0 +1,34 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+# Writing Logs to a File, in JSON
+log:
+  level: DEBUG
+  # filePath: "log-file.log"
+  # format: json
+# Configuring a buffer of 100 lines
+accessLog:
+  bufferingSize: 100
+#   filePath: "log-access.log"
+entryPoints:
+  web:
+    address: :80
+  websecure:
+    address: :443
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+certificatesResolvers:
+  letsencrypt_live:
+    acme:
+      storage: acme.json
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+      httpChallenge:
+        entryPoint: web
+  letsencrypt_test:
+    acme:
+      storage: acme-test.json
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      httpChallenge:
+        entryPoint: web
