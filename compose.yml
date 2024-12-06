@@ -42,6 +42,7 @@ services:
       DRUPAL_VERSION: $DRUPAL_VERSION
       DRUPAL_SITE: $DRUPAL_SITE
       DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
+      # Alternatively, define directly (or in env). Must be json formatted.
       WODBY_HOSTS: "[\"${PROJECT_BASE_URL}\",\"${PROJECT_SAN_URL}\"]"
       PHP_FPM_USER: wodby
       PHP_FPM_GROUP: wodby
