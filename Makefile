@@ -32,8 +32,8 @@ no-ssl-up:
 .PHONY: build
 build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
-	cd pece-distribution && git pull origin
-	docker build -t "pece-drupal:latest" -t "pece-drupal:$(PECE_COMMIT)" --build-arg PHP_VER="$(PHP_TAG)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distribution
+	cd pece-distro && git pull origin
+	docker build -t "pece-drupal:latest" -t "pece-drupal:$(PECE_COMMIT)" --build-arg PHP_VER="$(PHP_TAG)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
 	
 pece-distro:
 	git clone $(PROJECT_GIT) pece-distro
