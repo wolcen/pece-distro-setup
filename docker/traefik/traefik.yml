@@ -19,6 +19,7 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
+    network: frontend
 certificatesResolvers:
   letsencrypt_live:
     acme:
