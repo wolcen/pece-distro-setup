@@ -23,6 +23,9 @@ services:
     environment:
       PHP_EXTENSIONS_DISABLE: xhprof,spx
       PHP_MAIL_MIXED_LF_AND_CRLF: 'On'
+      PHP_DISPLAY_STARTUP_ERRORS: 'Off'
+      PHP_ERROR_REPORTING: E_ALL & ~E_DEPRECATED & ~E_STRICT
+
       # # Mailpit:
       # MSMTP_HOST: mailpit
       # MSMTP_PORT: 1025
