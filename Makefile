@@ -5,6 +5,7 @@ default: up
 # Vars useful only in the makefile (e.g. no need to define in .env)
 COMPOSER_ROOT ?= /var/www/html
 DRUPAL_ROOT ?= /var/www/html/web
+REGISTRY ?= git.example.com/organization
 # UID/GID only used for the build of pece-disto container.
 # To change execution user for php container, it must be built at a higher level.
 UID ?= $(shell id -u)
@@ -24,7 +25,7 @@ update:
 
 ## no-ssl-up	:	Start up containers without ssl.
 .PHONY: no-ssl-up
-no-ssl-up:
+no-ssl-up: docker/traefik/acme.json docker/traefik/acme-test.json
 	@echo "Starting up containers for $(PROJECT_NAME) without ssl"
 	docker compose up -d --remove-orphans
 
@@ -32,18 +33,23 @@ no-ssl-up:
 .PHONY: build
 build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
-	cd pece-distro && git pull origin
+	cd pece-distro && git pull origin && git checkout $(PROJECT_BRANCH)
 	docker build -t "pece-drupal:latest" -t "pece-drupal:$(PECE_COMMIT)" --build-arg PHP_VER="$(PHP_TAG)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
 	
 pece-distro:
 	git clone $(PROJECT_GIT) pece-distro
 	cd pece-distro && git checkout $(PROJECT_BRANCH)
 
-## build	:	Build PECE with latest available release.
+docker/traefik/acme.json docker/traefik/acme-test.json:
+	touch $@
+	chmod 600 $@
+
+## push	:	Push PECE to remote registry
 .PHONY: push
 push:
 	@echo "Pushing $(PROJECT_NAME) @ $(PECE_COMMIT)..."
-	docker push -t "pece-drupal:latest" -t "pece-drupal:$(PECE_COMMIT)"
+	docker tag pece-drupal:latest $(REGISTRY)/pece-drupal:latest
+	docker push "$(REGISTRY)/pece-drupal:latest" -a
 
 ## help	:	Print commands help.
 .PHONY: help
@@ -52,7 +58,7 @@ help : $(wildcard Makefile docker.mk)
 
 ## up	:	Start up containers with production ssl.
 .PHONY: up
-up:
+up: docker/traefik/acme.json docker/traefik/acme-test.json
 	@echo "Starting up containers for $(PROJECT_NAME)..."
 	chmod 600 docker/traefik/acme.json
 	chmod 600 docker/traefik/acme-test.json
