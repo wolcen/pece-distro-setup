@@ -40,8 +40,6 @@ services:
       DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
       PHP_FPM_USER: wodby
       PHP_FPM_GROUP: wodby
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - backend
     volumes:
@@ -74,7 +72,6 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
       NGINX_VHOST_PRESET: ${NGINX_VHOST_PRESET}
-      DRUPAL_HASH_SALT: ${DRUPAL_HASH_SALT}
       # NGINX_DRUPAL_FILE_PROXY_URL: http://example.com
     labels:
       - "traefik.enable=true"
