@@ -41,6 +41,7 @@ services:
       DRUPAL_HASH_SALT: $DRUPAL_HASH_SALT
       DRUPAL_VERSION: $DRUPAL_VERSION
       DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
+      WODBY_HOSTS: "[\"${PROJECT_BASE_URL}\",\"${PROJECT_SAN_URL}\"]"
       PHP_FPM_USER: wodby
       PHP_FPM_GROUP: wodby
     networks:
