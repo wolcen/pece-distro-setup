@@ -47,7 +47,8 @@ services:
       - backend
     volumes:
       - pece_app:/var/www/html
-      - ./docker/files/:/var/www/html/web/sites/default/files
+      - ./docker/files/:/mnt/files/public
+      - ./docker/private/:/mnt/files/private
 
   crond:
     init: true
@@ -62,7 +63,8 @@ services:
       - backend
     volumes:
       - pece_app:/var/www/html
-      - ./docker/files/:/var/www/html/web/sites/default/files
+      - ./docker/files/:/mnt/files/public
+      - ./docker/private/:/mnt/files/private
 
   nginx:
     image: wodby/nginx:$NGINX_TAG
@@ -87,7 +89,7 @@ services:
       - backend
     volumes:
       - pece_app:/var/www/html
-      - ./docker/files/:/var/www/html/web/sites/default/files
+      - ./docker/files/:/mnt/files/public
 
   traefik:
     image: traefik:v3.2
