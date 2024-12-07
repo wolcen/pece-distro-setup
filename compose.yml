@@ -23,8 +23,8 @@ services:
     environment:
       PHP_DISPLAY_STARTUP_ERRORS: 'Off'
       PHP_ERROR_REPORTING: E_ALL & ~E_DEPRECATED & ~E_STRICT
-      PHP_EXTENSIONS_DISABLE: xdebug,xhprof,spx
-      #PHP_EXTENSIONS_DISABLE: xdebug,xhprof,spx,opentelemetry,pcov,newrelic,smbclient
+      #PHP_EXTENSIONS_DISABLE: xdebug,xhprof,spx
+      PHP_EXTENSIONS_DISABLE: xdebug,xhprof,spx,opentelemetry,pcov,newrelic,smbclient
       PHP_MAIL_MIXED_LF_AND_CRLF: 'On'
       PHP_MEMORY_LIMIT: 256M
       PHP_POST_MAX_SIZE: 32M
