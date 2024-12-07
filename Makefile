@@ -47,7 +47,7 @@ docker/traefik/acme.json docker/traefik/acme-test.json:
 push:
 	@echo "Pushing $(PROJECT_NAME) @ $(PECE_COMMIT)..."
 	docker tag pece-drupal:latest $(REGISTRY)/pece-drupal:latest
-	docker push "$(REGISTRY)/pece-drupal:latest" -a
+	docker push -a "$(REGISTRY)/pece-drupal"
 
 ## help	:	Print commands help.
 .PHONY: help
