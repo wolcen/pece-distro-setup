@@ -4,7 +4,7 @@ services:
       - "traefik.http.middlewares.${PROJECT_NAME}_nginx-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.${PROJECT_NAME}_nginx.middlewares=${PROJECT_NAME}_nginx-redirect"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.entrypoints=websecure"
-      - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.rule=Host(`${PROJECT_BASE_URL}`)"
+      - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.rule=HostRegexp(`${PROJECT_URL_PATTERN}`)"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls=true"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls.domains[0].main=${PROJECT_BASE_URL}"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls.domains[0].sans=${PROJECT_SAN_URL}"
