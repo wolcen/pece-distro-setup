@@ -215,3 +215,6 @@ $config['site.settings']['name'] = '{{ getenv "SITE_NAME" }}';
 {{- if getenv "SITE_LOGO_FILE" }}
 $config['peceful.settings']['logo']['path'] = '{{ getenv "SITE_LOGO_FILE" }}';
 {{- end }}
+{{- if getenv "SITE_USE_SITE_NAME" }}
+$config['block.block.peceful_branding']['settings']['use_site_name'] = {{ getenv "SITE_USE_SITE_NAME" }};
+{{- end }}
