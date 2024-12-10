@@ -23,7 +23,7 @@ update:
 
 ## no-ssl-up	:	Start up containers without ssl.
 .PHONY: no-ssl-up
-no-ssl-up: docker/traefik/acme.json docker/traefik/acme-test.json
+no-ssl-up: docker-files
 	@echo "Starting up containers for $(PROJECT_NAME) without ssl"
 	docker compose up -d --remove-orphans
 
@@ -35,9 +35,15 @@ build: pece-distro
 	cp docker/wodby/drupal10.settings.php.tmpl pece-distro/
 	docker build -t "pece-drupal:latest" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_TAG)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
 
+.PHONY: docker-files
+docker-files: docker/traefik/acme.json docker/traefik/acme-test.json docker/crontab
+
 pece-distro:
 	git clone $(PROJECT_GIT) pece-distro
 	cd pece-distro && git checkout $(PROJECT_BRANCH)
+
+docker/crontab:
+	echo "*/15 * * * * drush -r /var/www/html/web cron" > docker/crontab
 
 docker/traefik/acme.json docker/traefik/acme-test.json:
 	touch $@
@@ -57,7 +63,7 @@ help : $(wildcard Makefile docker.mk)
 
 ## up	:	Start up containers with production ssl.
 .PHONY: up
-up: docker/traefik/acme.json docker/traefik/acme-test.json
+up: docker-files
 	@echo "Starting up containers for $(PROJECT_NAME)..."
 	chmod 600 docker/traefik/acme.json
 	chmod 600 docker/traefik/acme-test.json

@@ -94,8 +94,6 @@ services:
     container_name: "${PROJECT_NAME}_crond"
     depends_on:
       - php
-    environment:
-      CRONTAB: "0 * * * * drush -r /var/www/html/web cron"
     command: sudo -E crond -f -d 0
     networks:
       - backend
@@ -103,6 +101,7 @@ services:
       - pece_app:/var/www/html
       - ./docker/files/:/mnt/files/public
       - ./docker/private/:/mnt/files/private
+      - ./docker/crontab:/etc/crontabs/www-data
 
   nginx:
     image: wodby/nginx:$NGINX_TAG
