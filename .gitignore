@@ -1,5 +1,6 @@
 docker/database/data/
 docker/files/
+docker/backup/
 docker/traefik/acme*.json
 pece-distro
 .env

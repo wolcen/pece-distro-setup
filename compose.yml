@@ -64,6 +64,8 @@ services:
       - pece_app:/var/www/html
       - ./docker/files/:/mnt/files/public
       - ./docker/private/:/mnt/files/private
+      - ./docker/backup/:/mnt/files/backup
+
 
   crond:
     init: true
