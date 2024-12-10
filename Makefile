@@ -32,8 +32,9 @@ no-ssl-up: docker/traefik/acme.json docker/traefik/acme-test.json
 build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
 	cd pece-distro && git pull origin && git checkout $(PROJECT_BRANCH)
+	cp docker/wodby/drupal10.settings.php.tmpl pece-distro/
 	docker build -t "pece-drupal:latest" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_TAG)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
-	
+
 pece-distro:
 	git clone $(PROJECT_GIT) pece-distro
 	cd pece-distro && git checkout $(PROJECT_BRANCH)

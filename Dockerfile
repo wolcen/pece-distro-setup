@@ -8,6 +8,9 @@ WORKDIR /var/www/html
 USER ${UID}:${GID}
 COPY --chown=${UID}:${GID} . .
 USER root
+
+COPY drupal10.settings.php.tmpl /etc/gotpl/
+
 RUN ["composer", "install", "--no-dev", "--optimize-autoloader"]
 RUN ["ln", "-s", "/mnt/files/public", "/var/www/html/web/sites/default/files"]
 RUN ["ln", "-s", "/mnt/files/private", "/var/www/html/private"]
