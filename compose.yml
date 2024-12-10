@@ -66,6 +66,27 @@ services:
       - ./docker/private/:/mnt/files/private
       - ./docker/backup/:/mnt/files/backup
 
+  sshd:
+    init: true
+    image: pece-drupal
+    container_name: "${PROJECT_NAME}_sshd"
+    environment:
+      SSHD_HOST_KEYS_DIR: /mnt/ssh/hostkeys
+    command: sudo /usr/sbin/sshd -De
+    ports:
+      - '${SSH_PORT}:22'
+    depends_on:
+      - php
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - pece_app:/var/www/html
+      - ./docker/files/:/mnt/files/public
+      - ./docker/private/:/mnt/files/private
+      - ./docker/backup/:/mnt/files/backup
+      - ./docker/ssh/hostkeys:/mnt/ssh/hostkeys
+      - ./docker/ssh/authorized_keys:/home/wodby/.ssh/authorized_keys
 
   crond:
     init: true
