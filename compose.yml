@@ -58,8 +58,6 @@ services:
       SITE_NAME: $SITE_NAME
       # Alternatively, define directly (or in env). Must be json formatted.
       WODBY_HOSTS: "[\"${PROJECT_BASE_URL}\",\"${PROJECT_SAN_URL}\"]"
-      PHP_FPM_USER: wodby
-      PHP_FPM_GROUP: wodby
     networks:
       - backend
     volumes:
