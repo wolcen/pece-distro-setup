@@ -12,5 +12,5 @@ RUN ["composer", "install", "--no-dev", "--optimize-autoloader"]
 RUN ["ln", "-s", "/mnt/files/public", "/var/www/html/web/sites/default/files"]
 RUN ["ln", "-s", "/mnt/files/private", "/var/www/html/private"]
 RUN ["chown", "-R", "wodby:wodby", "/var/www/html"]
-USER wodby:wodby
+USER wodby
 RUN ["composer", "clear-cache"]
