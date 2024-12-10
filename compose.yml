@@ -57,6 +57,7 @@ services:
       SMTP_FROM: $SMTP_FROM
       SMTP_FROMNAME: $SMTP_FROMNAME
       SITE_NAME: $SITE_NAME
+      SITE_LOGO_FILE: $SITE_LOGO_FILE
       # Alternatively, define directly (or in env). Must be json formatted.
       WODBY_HOSTS: "[\"${PROJECT_BASE_URL}\",\"${PROJECT_SAN_URL}\"]"
     networks:

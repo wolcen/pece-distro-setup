@@ -212,3 +212,6 @@ $config['smtp.settings']['smtp_fromname'] = '{{ getenv "SMTP_FROMNAME" }}';
 {{- if getenv "SITE_NAME" }}
 $config['site.settings']['name'] = '{{ getenv "SITE_NAME" }}';
 {{- end }}
+{{- if getenv "SITE_LOGO_FILE" }}
+$config['peceful.settings']['logo']['path'] = '{{ getenv "SITE_LOGO_FILE" }}';
+{{- end }}
