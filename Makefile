@@ -69,6 +69,14 @@ up: docker-files
 	chmod 600 docker/traefik/acme-test.json
 	docker compose -f compose.yml -f compose.ssl.yml up -d --remove-orphans
 
+.PHONY: reload-config
+## reload-config	:	Update the configuration for Drupal's core
+reload-config:
+	@echo "Updating solr configuration for drupal core - requires sudo to write files as UID 1001"
+	sudo rm -rf ./docker/solr/solr/server/solr/drupal/conf/*
+	sudo unzip solr_9.x_config.zip -d ./docker/solr/solr/server/solr/drupal/conf/
+	docker exec $(PROJECT_NAME)_solr curl "http://localhost:8983/solr/admin/cores?action=RELOAD&core=drupal"
+
 .PHONY: mutagen
 mutagen:
 	mutagen-compose up
