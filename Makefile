@@ -27,6 +27,8 @@ prepare:
 	@echo "Creating files owned by other users (requires sudo)"
 	sudo touch docker/ssh/authorized_keys
 	sudo chown 82:82 docker/ssh/authorized_keys
+	sudo mkdir docker/solr
+	sudo chown 1001:1001 docker/solr
 
 ## no-ssl-up	:	Start up containers without ssl.
 .PHONY: no-ssl-up
