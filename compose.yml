@@ -13,7 +13,7 @@ services:
     networks:
       - backend
     volumes:
-      - ./docker/database/data/pecev2:/var/lib/mysql # Use bind mount
+      - ./docker/database/data/pecev2:/var/lib/mysql
       # - ./docker/database/init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
 
   php:
@@ -24,7 +24,6 @@ services:
       PHP_DISPLAY_STARTUP_ERRORS: 'Off'
       PHP_DISPLAY_ERRORS: 'Off'
       PHP_ERROR_REPORTING: E_ALL & ~E_DEPRECATED & ~E_STRICT
-      #PHP_EXTENSIONS_DISABLE: xdebug,xhprof,spx
       PHP_EXTENSIONS_DISABLE: xdebug,xhprof,spx,opentelemetry,pcov,newrelic,smbclient
       PHP_MAIL_MIXED_LF_AND_CRLF: 'On'
       PHP_MEMORY_LIMIT: $PHP_MEMORY_LIMIT
@@ -50,6 +49,8 @@ services:
       DRUPAL_VERSION: $DRUPAL_VERSION
       DRUPAL_SITE: $DRUPAL_SITE
       DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
+      DRUPAL_ENABLE_REDIS_CACHE: TRUE
+      REDIS_HOST: redis
       SMTP_ON: $SMTP_ON
       SMTP_HOST: $SMTP_HOST
       SMTP_PORT: $SMTP_PORT
@@ -116,17 +117,16 @@ services:
     depends_on:
       - php
     environment:
-      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_ERROR_LOG_LEVEL: info
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
       NGINX_VHOST_PRESET: ${NGINX_VHOST_PRESET}
-      # NGINX_DRUPAL_FILE_PROXY_URL: http://example.com
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=HostRegexp(`${PROJECT_URL_PATTERN}`)"
       - "traefik.http.routers.${PROJECT_NAME}_nginx.entrypoints=web"
-      # - "traefik.http.routers.${PROJECT_NAME}_nginx.service=${PROJECT_NAME}_nginx"
-      # - "traefik.http.services.${PROJECT_NAME}_nginx.loadbalancer.server.port=80"
+      - "traefik.http.routers.${PROJECT_NAME}_nginx.service=${PROJECT_NAME}_nginx"
+      - "traefik.http.services.${PROJECT_NAME}_nginx.loadbalancer.server.port=80"
     networks:
       - frontend
       - backend
@@ -134,19 +134,32 @@ services:
       - pece_app:/var/www/html
       - ./docker/files/:/mnt/files/public
 
+  solr:
+    image: bitnami/solr:$SOLR_TAG
+    container_name: "${PROJECT_NAME}_solr"
+    environment:
+      SOLR_CORES: drupal
+      SOLR_HOST: "solr"
+    volumes:
+      - ./docker/solr:/bitnami
+    networks:
+      - backend
+
+  redis:
+    container_name: "${PROJECT_NAME}_valkey"
+    image: wodby/valkey:$VALKEY_TAG
+    networks:
+      - backend
+
   traefik:
     image: traefik:v3.2
     container_name: "${PROJECT_NAME}_traefik"
-    command: --configFile=/etc/traefik/traefik.yml --api.dashboard=true --api.insecure=true
+    command: --configFile=/etc/traefik/traefik.yml
     restart: always
     security_opt:
       - no-new-privileges:true
     ports:
       - "${PROJECT_PORT}:80"
-      - '8080:8080' # Dashboard
-    # labels:
-    #   - "traefik.http.routers.api.service=api@internal"
-    #   - "traefik.http.routers.api.rule=Host(`traefik.${PROJECT_BASE_URL}`)"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
@@ -217,9 +230,6 @@ volumes:
 #    - "traefik.http.services.${PROJECT_NAME}_varnish.loadbalancer.server.port=6081"
 #    - "traefik.http.routers.${PROJECT_NAME}_varnish.rule=Host(`varnish.${PROJECT_BASE_URL}`)"
 
-#  valkey:
-#    container_name: "${PROJECT_NAME}_valkey"
-#    image: wodby/valkey:$VALKEY_TAG
 
 #  adminer:
 #    container_name: "${PROJECT_NAME}_adminer"
@@ -244,18 +254,7 @@ volumes:
 #    labels:
 #    - "traefik.http.routers.${PROJECT_NAME}_pma.rule=Host(`pma.${PROJECT_BASE_URL}`)"
 
-#  solr:
-#    image: wodby/solr:$SOLR_TAG
-#    container_name: "${PROJECT_NAME}_solr"
-#    environment:
-##      SOLR_DEFAULT_CONFIG_SET: $SOLR_CONFIG_SET
-#      ZK_HOST: zookeeper:2181
-#      SOLR_HEAP: 1024m
-#    depends_on:
-#    - zookeeper
-#    labels:
-#    - "traefik.http.services.${PROJECT_NAME}_solr.loadbalancer.server.port=8983"
-#    - "traefik.http.routers.${PROJECT_NAME}_solr.rule=Host(`solr.${PROJECT_BASE_URL}`)"
+
 
 #  zookeeper:
 #    image: zookeeper:$ZOOKEEPER_TAG

@@ -9,21 +9,11 @@ services:
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls.domains[0].main=${PROJECT_BASE_URL}"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls.domains[0].sans=${PROJECT_SAN_URL}"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls.certresolver=letsencrypt_${LETS_ENCRYPT_TARGET}"
-      # - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.service=${PROJECT_NAME}_nginx"
+      - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.service=${PROJECT_NAME}_nginx"
 
   traefik:
-    command: --configFile=/etc/traefik/traefik.yml
     environment:
       TRAEFIK_CERTIFICATESRESOLVERS_letsencrypt_live_ACME_EMAIL: ${SYSADMIN_MAIL}
       TRAEFIK_CERTIFICATESRESOLVERS_letsencrypt_test_ACME_EMAIL: ${SYSADMIN_MAIL}
     ports:
       - '443:443'
-    # labels:
-      # - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=http"
-      # - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-      # - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_ACCESS_HASH}"
-      # - "traefik.http.routers.traefik-secure.entrypoints=websecure"
-      # - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${PROJECT_BASE_URL}`)"
-      # - "traefik.http.routers.traefik-secure.service=api@internal"
-      # - "traefik.http.routers.traefik-secure.tls=true"
-      # - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
