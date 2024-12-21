@@ -21,6 +21,13 @@ update:
 	make drush deploy
 	@echo "Finish Install $(PROJECT_NAME)"
 
+## prepare	:	Create files not in repository that must have alternate ownership
+.PHONY: prepare
+prepare:
+	@echo "Creating files owned by other users (requires sudo)"
+	sudo touch docker/ssh/authorized_keys
+	sudo chown 82:82 docker/ssh/authorized_keys
+
 ## no-ssl-up	:	Start up containers without ssl.
 .PHONY: no-ssl-up
 no-ssl-up: docker-files
