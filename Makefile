@@ -6,6 +6,7 @@ default: up
 COMPOSER_ROOT ?= /var/www/html
 DRUPAL_ROOT ?= /var/www/html/web
 REGISTRY ?= git.example.com/organization
+BUILD_VERSION ?= 0.0.1
 # UID/GID only used for the build of pece-disto container.
 # To change execution user for php container, it must be built at a higher level.
 UID ?= $(shell id -u)
@@ -42,7 +43,7 @@ build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
 	cd pece-distro && git pull origin && git checkout $(PROJECT_BRANCH) && cd -
 	cp docker/wodby/drupal10.settings.php.tmpl pece-distro/
-	docker build -t "pece-drupal:latest" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_TAG)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
+	docker build -t "pece-drupal:latest" -t "pece-drupal:$(BUILD_VERSION)" -t "pece-drupal:$$(git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_VER)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
 
 .PHONY: docker-files
 docker-files: docker/traefik/acme.json docker/traefik/acme-test.json docker/crontab
