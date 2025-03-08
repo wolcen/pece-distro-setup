@@ -38,19 +38,13 @@ prepare:
 	sudo mkdir docker/solr
 	sudo chown 1001:1001 docker/solr
 
-## no-ssl-up	:	Start up containers without ssl.
-.PHONY: no-ssl-up
-no-ssl-up: docker-files
-	@echo "Starting up containers for $(PROJECT_NAME) without ssl"
-	docker compose up -d --remove-orphans
-
 ## build	:	Build PECE with latest available release.
 .PHONY: build
 build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
 	cd pece-distro && git pull origin && git checkout $(PROJECT_BRANCH) && cd -
 	cp docker/wodby/drupal10.settings.php.tmpl pece-distro/
-	docker build -t "pece-drupal:latest" -t "pece-drupal:$(BUILD_VERSION)" -t "pece-drupal:$$(git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_VER)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
+	docker build -t "pece-drupal:latest" -t "pece-drupal:$(BUILD_VERSION)" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_VER)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
 
 .PHONY: docker-files
 docker-files: docker/traefik/acme.json docker/traefik/acme-test.json docker/crontab
