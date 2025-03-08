@@ -22,9 +22,8 @@ GID ?= $(shell id -g)
 
 ## update	:	Update PECE with latest available release.
 .PHONY: update
-update:
-	@echo "Update $(PROJECT_NAME)..."
-	make down
+update: prune
+	@echo "Updating $(PROJECT_NAME)..."
 	git pull origin
 	make up
 	make drush deploy
