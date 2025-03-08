@@ -77,7 +77,7 @@ up: docker-files
 	@echo "Starting up containers for $(PROJECT_NAME)..."
 	chmod 600 docker/traefik/acme.json
 	chmod 600 docker/traefik/acme-test.json
-	docker compose -f compose.yml -f compose.ssl.yml up -d --remove-orphans
+	docker compose -f compose.yml $(shell (echo "${TLS_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.tls.yml") $(shell (echo "${SSH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.ssh.yml") up -d --remove-orphans
 	## Temporary hack to update NGINX's failed handling of mjs files:
 	docker compose exec nginx bash -c 'sed -i -E "s/javascript +js/& mjs/" /etc/nginx/mime.types'
 	docker compose exec -u root nginx bash -c 'kill -HUP `pgrep -o nginx`'

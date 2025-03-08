@@ -16,4 +16,4 @@ services:
       TRAEFIK_CERTIFICATESRESOLVERS_letsencrypt_live_ACME_EMAIL: ${SYSADMIN_MAIL}
       TRAEFIK_CERTIFICATESRESOLVERS_letsencrypt_test_ACME_EMAIL: ${SYSADMIN_MAIL}
     ports:
-      - '443:443'
+      - '${PROJECT_PORT_TLS}:443'
