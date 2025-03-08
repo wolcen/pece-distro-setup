@@ -117,7 +117,7 @@ stop:
 ##		prune mariadb solr	: Prune `mariadb` and `solr` containers and remove their volumes.
 .PHONY: prune
 prune:
-	@echo "Removing containers for $(PROJECT_NAME)..."
+	@echo "Removing containers and volumes for $(PROJECT_NAME)..."
 	@docker compose down -v $(filter-out $@,$(MAKECMDGOALS))
 
 ## ps	:	List running containers.

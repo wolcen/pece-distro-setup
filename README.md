@@ -7,8 +7,6 @@ Automate server setup for new instances of PECE using Docker and Docker-Compose.
 ## Requirements
   * Make
   * [Docker](https://docker.com/)
-  * [Docker Compose](https://docs.docker.com/compose/)
-
 
 ## Installation & Setup
 
