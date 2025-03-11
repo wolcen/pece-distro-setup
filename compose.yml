@@ -120,7 +120,7 @@ services:
       SOLR_CORES: drupal
       SOLR_HOST: "solr"
     volumes:
-      - ./docker/solr:/bitnami
+      - ./docker/solr:/bitnami/solr
     networks:
       - backend
 

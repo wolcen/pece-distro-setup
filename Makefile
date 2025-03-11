@@ -35,7 +35,7 @@ prepare:
 	@echo "Creating files owned by other users (requires sudo)"
 	sudo touch docker/ssh/authorized_keys
 	sudo chown 82:82 docker/ssh/authorized_keys
-	sudo mkdir docker/solr
+	sudo mkdir -p docker/solr
 	sudo chown 1001:1001 docker/solr
 
 ## build	:	Build PECE with latest available release.
@@ -87,8 +87,8 @@ up: docker-files
 ## reload-config	:	Update the configuration for Drupal's core
 reload-config:
 	@echo "Updating solr configuration for drupal core - requires sudo to write files as UID 1001"
-	sudo rm -rf ./docker/solr/solr/server/solr/drupal/conf/*
-	sudo unzip solr_9.x_config.zip -d ./docker/solr/solr/server/solr/drupal/conf/
+	[ -d ./docker/solr/server/solr/drupal/conf ] && sudo rm -rf ./docker/solr/server/solr/drupal/conf/* || (echo 'Drupal core does not appear to exist - check solr logs'; exit 1)
+	sudo unzip solr_9.x_config.zip -d ./docker/solr/server/solr/drupal/conf/
 	docker exec $(PROJECT_NAME)_solr curl "http://localhost:8983/solr/admin/cores?action=RELOAD&core=drupal"
 
 .PHONY: mutagen
