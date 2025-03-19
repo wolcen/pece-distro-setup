@@ -3,13 +3,13 @@ global:
   sendAnonymousUsage: false
 # Writing Logs to a File, in JSON
 log:
-  level: INFO
-  # filePath: "log-file.log"
-  # format: json
+  level: DEBUG
+  filePath: "/var/log/log-file.log"
+  format: json
 # Configuring a buffer of 100 lines
 accessLog:
   bufferingSize: 100
-#   filePath: "log-access.log"
+  filePath: "/var/log/log-access.log"
 entryPoints:
   web:
     address: :80

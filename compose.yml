@@ -131,7 +131,7 @@ services:
       - backend
 
   traefik:
-    image: traefik:v3.2
+    image: traefik:$TRAEFIK_TAG
     container_name: "${PROJECT_NAME}_traefik"
     command: --configFile=/etc/traefik/traefik.yml
     restart: always

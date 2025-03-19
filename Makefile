@@ -15,6 +15,7 @@ COMPOSER_ROOT ?= /var/www/html
 DRUPAL_ROOT ?= /var/www/html/web
 REGISTRY ?= git.example.com/organization
 BUILD_VERSION ?= 0.0.1
+COMPOSE_FILES ?= -f compose.yml $(shell (echo "${TRAEFIK_DASH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.dash.yml") $(shell [ -f compose.override.yml ] && echo "-f compose.override.yml") $(shell (echo "${TLS_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.tls.yml") $(shell (echo "${SSH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.ssh.yml")
 # UID/GID only used for the build of pece-disto container.
 # To change execution user for php container, it must be built at a higher level.
 UID ?= $(shell id -u)
@@ -78,10 +79,10 @@ up: docker-files
 	@echo "Starting up containers for $(PROJECT_NAME)..."
 	chmod 600 docker/traefik/acme.json
 	chmod 600 docker/traefik/acme-test.json
-	docker compose -f compose.yml $(shell (echo "${TLS_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.tls.yml") $(shell (echo "${SSH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.ssh.yml") up -d --remove-orphans
+	docker compose $(COMPOSE_FILES) up -d --remove-orphans
 	## Temporary hack to update NGINX's failed handling of mjs files:
-	docker compose exec nginx bash -c 'sed -i -E "s/javascript +js/& mjs/" /etc/nginx/mime.types'
-	docker compose exec -u root nginx bash -c 'kill -HUP `pgrep -o nginx`'
+	docker compose $(COMPOSE_FILES) exec nginx bash -c 'sed -i -E "s/javascript +js/& mjs/" /etc/nginx/mime.types'
+	docker compose $(COMPOSE_FILES) exec -u root nginx bash -c 'kill -HUP `pgrep -o nginx`'
 
 .PHONY: reload-config
 ## reload-config	:	Update the configuration for Drupal's core
@@ -103,13 +104,13 @@ down: stop
 .PHONY: start
 start:
 	@echo "Starting containers for $(PROJECT_NAME) from where you left off..."
-	@docker compose start
+	docker compose $(COMPOSE_FILES) start
 
 ## stop	:	Stop containers.
 .PHONY: stop
 stop:
 	@echo "Stopping containers for $(PROJECT_NAME)..."
-	@docker compose stop
+	docker compose $(COMPOSE_FILES) stop
 
 ## prune	:	Remove containers and their volumes.
 ##		You can optionally pass an argument with the service name to prune single container
@@ -118,7 +119,7 @@ stop:
 .PHONY: prune
 prune:
 	@echo "Removing containers and volumes for $(PROJECT_NAME)..."
-	@docker compose down -v $(filter-out $@,$(MAKECMDGOALS))
+	docker compose $(COMPOSE_FILES) down -v $(filter-out $@,$(MAKECMDGOALS))
 
 ## ps	:	List running containers.
 .PHONY: ps
@@ -151,4 +152,4 @@ drush:
 ##		logs nginx php	: View `nginx` and `php` containers logs.
 .PHONY: logs
 logs:
-	@docker compose logs -f $(filter-out $@,$(MAKECMDGOALS))
+	docker compose $(COMPOSE_FILES) logs -f $(filter-out $@,$(MAKECMDGOALS))
