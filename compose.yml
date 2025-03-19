@@ -196,6 +196,7 @@ networks:
   frontend:
     external: true
   backend:
+    internal: true
 
 volumes:
   pece_app:
