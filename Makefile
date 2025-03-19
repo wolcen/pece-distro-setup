@@ -21,6 +21,12 @@ COMPOSE_FILES ?= -f compose.yml $(shell (echo "${TRAEFIK_DASH_ENABLE}" | grep -E
 UID ?= $(shell id -u)
 GID ?= $(shell id -g)
 
+## check	:	Output the merged composer.yml files
+.PHONY: check
+check:
+	@echo "Compose files: $(COMPOSE_FILES)"
+	docker compose $(COMPOSE_FILES) config
+
 ## update	:	Update PECE with latest available release.
 .PHONY: update
 update: prune
