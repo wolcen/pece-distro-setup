@@ -6,6 +6,7 @@ docker/config/
 docker/crontab
 docker/database/data/
 docker/files/
+docker/files/
 docker/private/
 docker/solr/
 docker/ssh/
