@@ -145,6 +145,7 @@ services:
       - ./docker/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
       - ./docker/traefik/acme.json:/acme.json
       - ./docker/traefik/acme-test.json:/acme-test.json
+      - ./docker/logs/traefik:/var/log
     networks:
       - frontend
 

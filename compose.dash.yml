@@ -1,0 +1,14 @@
+services:
+  traefik:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME}_traefik-secure.entrypoints=websecure"
+      - "traefik.http.routers.${PROJECT_NAME}_traefik-secure.rule=Host(`traefik.${PROJECT_BASE_URL}`)"
+      - "traefik.http.routers.${PROJECT_NAME}_traefik-secure.service=api@internal"
+      - "traefik.http.routers.${PROJECT_NAME}_traefik-secure.tls=true"
+      - "traefik.http.routers.${PROJECT_NAME}_traefik-secure.tls.certresolver=letsencrypt_${LETS_ENCRYPT_TARGET}"
+      #- "traefik.http.routers.${PROJECT_NAME}_traefik_-secure.rule=Host(`${PROJECT_BASE_URL}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      #- "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+      #- "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      #- "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_ACCESS_HASH}"
+      #- "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
