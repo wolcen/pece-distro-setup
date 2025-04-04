@@ -3,6 +3,7 @@ services:
     init: true
     image: pece-drupal
     container_name: "${PROJECT_NAME}_sshd"
+    restart: always
     environment:
       SSHD_HOST_KEYS_DIR: /mnt/ssh/hostkeys
     command: sudo /usr/sbin/sshd -De

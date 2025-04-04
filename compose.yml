@@ -78,6 +78,7 @@ services:
     init: true
     image: pece-drupal
     container_name: "${PROJECT_NAME}_crond"
+    restart: always
     depends_on:
       - php
     environment:
@@ -159,6 +160,7 @@ services:
   solr:
     image: bitnami/solr:$SOLR_TAG
     container_name: "${PROJECT_NAME}_solr"
+    restart: always
     environment:
       SOLR_CORES: drupal
       SOLR_HOST: "solr"
@@ -169,6 +171,7 @@ services:
 
   redis:
     container_name: "${PROJECT_NAME}_valkey"
+    restart: always
     image: wodby/valkey:$VALKEY_TAG
     networks:
       - backend
