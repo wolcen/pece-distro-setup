@@ -87,8 +87,8 @@ up: docker-files
 	chmod 600 docker/traefik/acme-test.json
 	docker compose $(COMPOSE_FILES) up -d --remove-orphans
 	## Temporary hack to update NGINX's failed handling of mjs files:
-	docker compose $(COMPOSE_FILES) exec nginx bash -c 'sed -i -E "s/javascript +js/& mjs/" /etc/nginx/mime.types'
-	docker compose $(COMPOSE_FILES) exec -u root nginx bash -c 'kill -HUP `pgrep -o nginx`'
+	#docker compose $(COMPOSE_FILES) exec nginx bash -c 'sed -i -E "s/javascript +js/& mjs/" /etc/nginx/mime.types'
+	#docker compose $(COMPOSE_FILES) exec -u root nginx bash -c 'kill -HUP `pgrep -o nginx`'
 
 .PHONY: reload-config
 ## reload-config	:	Update the configuration for Drupal's core

@@ -2,7 +2,9 @@ services:
   nginx:
     labels:
       - "traefik.http.middlewares.${PROJECT_NAME}_nginx-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.${PROJECT_NAME}_nginx-iplimit.ipallowlist.sourcerange=${TRAEFIK_TRUSTED_IPS}"
       - "traefik.http.routers.${PROJECT_NAME}_nginx.middlewares=${PROJECT_NAME}_nginx-redirect"
+      - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.middlewares=${PROJECT_NAME}_nginx-iplimit"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.entrypoints=websecure"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.rule=HostRegexp(`${PROJECT_URL_PATTERN}`)"
       - "traefik.http.routers.${PROJECT_NAME}_nginx-secure.tls=true"
