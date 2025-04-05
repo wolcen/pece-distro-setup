@@ -156,7 +156,7 @@ services:
       - backend
     volumes:
       - pece_app:/var/www/html
-      - ./docker/wodby/nginx-vhost.conf:/etc/gotpl/vhost.conf.tmpl:ro
+      - ./docker/wodby/nginx-ratelimit.conf:/etc/nginx/conf.d/ratelimit.conf
       - ./docker/wodby/nginx-preset.conf:/etc/gotpl/presets/drupal10-ratelimit.conf.tmpl:ro
       - ./docker/wodby/nginx-mime.types:/etc/nginx/mime.types:ro
       - ./docker/files/:/mnt/files/public
