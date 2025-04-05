@@ -145,6 +145,7 @@ services:
       NGINX_SERVER_ROOT: /var/www/html/web
       NGINX_VHOST_PRESET: ${NGINX_VHOST_PRESET}
       NGINX_SET_REAL_IP_FROM: ${NGINX_SET_REAL_IP_FROM}
+      NGINX_REAL_IP_HEADER: ${NGINX_REAL_IP_HEADER}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=HostRegexp(`${PROJECT_URL_PATTERN}`)"
