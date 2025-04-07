@@ -11,5 +11,6 @@ docker/private/
 docker/solr/
 docker/ssh/
 docker/traefik/acme*.json
+docker/wodby/nginx-preset.conf
 mutagen.yml.lock
 pece-distro/

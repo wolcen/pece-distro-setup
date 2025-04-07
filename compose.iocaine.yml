@@ -1,0 +1,13 @@
+services:
+  iocaine:
+    container_name: "${PROJECT_NAME}_iocaine"
+    image: git.madhouse-project.org/iocaine/iocaine:latest
+    restart: unless-stopped
+    volumes:
+      - ./docker/iocaine/:/data
+    environment:
+      - IOCAINE__SERVER__BIND="0.0.0.0:42069"
+      - IOCAINE__SOURCES__WORDS="/data/wordlist.txt"
+      - IOCAINE__SOURCES__MARKOV=["/data/pg1.txt", "/data/pg1.txt", "/data/pg37904.txt", "/data/pg44770.txt", "/data/pg45537.txt", "/data/pg75806.txt", "/data/pg75812.txt"]
+    networks:
+      - frontend
