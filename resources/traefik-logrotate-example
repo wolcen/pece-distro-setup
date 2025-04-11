@@ -1,0 +1,12 @@
+/srv/pece-distro/docker/logs/traefik/log-access.log {
+        daily
+        missingok
+        rotate 14
+        compress
+        notifempty
+        # create 640 root adm
+        postrotate
+                pidof traefik && kill -USR1 $(pidof traefik)
+                #alternatively: /usr/bin/killall -USR1 traefik
+        endscript
+}
