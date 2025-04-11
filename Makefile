@@ -27,6 +27,16 @@ check:
 	@echo "Compose files: $(COMPOSE_FILES)"
 	docker compose $(COMPOSE_FILES) config
 
+## compare	:	Check for new/updated values in .env.example compared to current .env file
+.PHONY: compare
+compare:
+	echo "Looking for new/different .env entries using .env.example"
+	grep -vE "^#" .env | grep -v "^$$" | sort > .env.strip
+	grep -vE "^#" .env.example | grep -v "^$$" | sort > .env.example.strip
+	diff -u .env.strip .env.example.strip | diffr
+	rm .env.strip
+	rm .env.example.strip
+
 ## update	:	Update PECE with latest available release.
 .PHONY: update
 update: prune
