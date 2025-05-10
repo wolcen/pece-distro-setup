@@ -62,6 +62,7 @@ make build
 
 - Create the front-end network with `docker network create frontend`
 - As your DB will not exist it will not yet be configured to enable Redis. Given this, you should not specify a redis host value yet. In the .env file, ensure setting "REDIS_HOST=", with nothing after the equal sign.
+- Create additional folders and set permissions with `make prepare`
 - You can now start the images using `make up`
 - After starting the images, you will need to add the Solr configuration for the created drupal core. `make reload-config`
 - Log into the php container to run your site install: `make shell` and then `drush si pece --existing-config`
