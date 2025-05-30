@@ -225,6 +225,7 @@ $config['smtp.settings']['smtp_password'] = '{{ getenv "SMTP_PASSWORD" }}';
 {{- end }}
 {{- if getenv "SMTP_FROM" }}
 $config['smtp.settings']['smtp_from'] = '{{ getenv "SMTP_FROM" }}';
+$config['system.site']['mail'] = {{ getenv "SMTP_FROM" }};
 {{- end }}
 {{- if getenv "SMTP_FROMNAME" }}
 $config['smtp.settings']['smtp_fromname'] = '{{ getenv "SMTP_FROMNAME" }}';
