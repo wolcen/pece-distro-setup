@@ -1,0 +1,19 @@
+defaults
+port {{ getenv "MSMTP_PORT" "25" }}
+tls {{ getenv "MSMTP_TLS" "off" }}
+tls_starttls {{ getenv "MSMTP_STARTLS" "off" }}
+{{- if getenv "MSMTP_LOG" }}
+logfile {{ getenv "MSMTP_LOGFILE" "/proc/self/fd/2" }}
+{{- end }}
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account default
+auth {{ getenv "MSMTP_AUTH" "off" }}
+host {{ getenv "MSMTP_HOST" "opensmtpd" }}
+{{- if getenv "MSMTP_USER" }}
+user {{ getenv "MSMTP_USER" }}
+{{- end }}
+{{- if getenv "MSMTP_PASSWORD" }}
+password {{ getenv "MSMTP_PASSWORD" }}
+{{- end }}
+add_missing_date_header {{ getenv "MSMTP_ADD_MISSING_DATE_HEADER" "on" }}
