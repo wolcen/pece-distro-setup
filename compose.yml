@@ -74,6 +74,7 @@ services:
       - ./docker/files/:/mnt/files/public
       - ./docker/private/:/mnt/files/private
       - ./docker/backup/:/mnt/files/backup
+      - ./docker/wodby/drupal10.settings.php.tmpl:/etc/gotpl/drupal10.settings.php.tmpl
 
   crond:
     init: true
