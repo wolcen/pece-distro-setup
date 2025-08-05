@@ -13,8 +13,6 @@ default: up
 # Vars useful only in the makefile (e.g. no need to define in .env)
 COMPOSER_ROOT ?= /var/www/html
 DRUPAL_ROOT ?= /var/www/html/web
-REGISTRY ?= git.example.com/organization
-BUILD_VERSION ?= 0.0.1
 COMPOSE_FILES ?= -f compose.yml $(shell (echo "${TRAEFIK_DASH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.dash.yml") $(shell [ -f compose.override.yml ] && echo "-f compose.override.yml") $(shell (echo "${TLS_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.tls.yml") $(shell (echo "${SSH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.ssh.yml") $(shell (echo "${IOCAINE_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.iocaine.yml")
 # UID/GID only used for the build of pece-disto container.
 # To change execution user for php container, it must be built at a higher level.
