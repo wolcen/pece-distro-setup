@@ -112,7 +112,9 @@ mutagen:
 
 ## down	:	Stop containers.
 .PHONY: down
-down: stop
+down:
+	@echo "Removing containers for $(PROJECT_NAME)..."
+	docker compose $(COMPOSE_FILES) down
 
 ## start	:	Start containers without updating.
 .PHONY: start
