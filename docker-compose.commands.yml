@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   git-clone:
     image: wodby/drupal-php:$PHP_TAG
