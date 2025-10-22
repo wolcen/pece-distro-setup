@@ -94,6 +94,11 @@ If you use a common build/CI/etc:
 Set your REPOSITORY and 
 
 ```
+make shell
+$ drush sql-dump --gzip > /mnt/files/backup/pre-install.sql.gz
+$ exit
+git pull # get latest configuration/docker code
+make compare # check for any new .env requirements and adjust
 make build
 make prune # ensures removal of the php code volume
 make up
@@ -101,6 +106,7 @@ make shell
 $ drush deploy # perform drupal updates
 $ cd content/essential
 $ find . -type f -exec ../../vendor/bin/drush content:import ../content/essential/{} \; # import default content items
+$ exit
 ```
 
 - Access http://`<your-pece-instance-name.com>` on your browser and proceed with installation of your new instance of PECE.
