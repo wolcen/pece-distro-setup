@@ -78,7 +78,7 @@ services:
 
   crond:
     init: true
-    image: pece-drupal
+    image: pece-drupal:latest
     container_name: "${PROJECT_NAME}_crond"
     restart: always
     depends_on:
