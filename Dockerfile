@@ -1,12 +1,8 @@
 ARG PHP_VER=8.3
 FROM wodby/drupal-php:${PHP_VER}
 
-ARG UID=1000
-ARG GID=1000
-
 WORKDIR /var/www/html
-USER ${UID}:${GID}
-COPY --chown=${UID}:${GID} . .
+COPY . .
 USER root
 
 COPY drupal10.settings.php.tmpl /etc/gotpl/

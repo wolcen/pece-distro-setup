@@ -14,10 +14,6 @@ default: up
 COMPOSER_ROOT ?= /var/www/html
 DRUPAL_ROOT ?= /var/www/html/web
 COMPOSE_FILES ?= -f compose.yml $(shell (echo "${TRAEFIK_DASH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.dash.yml") $(shell [ -f compose.override.yml ] && echo "-f compose.override.yml") $(shell (echo "${TLS_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.tls.yml") $(shell (echo "${SSH_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.ssh.yml") $(shell (echo "${IOCAINE_ENABLE}" | grep -Eiq  "(true|yes)") && echo "-f compose.iocaine.yml")
-# UID/GID only used for the build of pece-disto container.
-# To change execution user for php container, it must be built at a higher level.
-UID ?= $(shell id -u)
-GID ?= $(shell id -g)
 
 ## check	:	Output the merged composer.yml files
 .PHONY: check
@@ -59,7 +55,7 @@ build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
 	cd pece-distro && git pull origin && git checkout $(PROJECT_BRANCH) && cd -
 	cp docker/wodby/drupal10.settings.php.tmpl pece-distro/
-	docker build -t "pece-drupal:latest" -t "pece-drupal:$(BUILD_VERSION)" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_VER)" --build-arg UID="$(UID)" --build-arg GID="$(GID)" -f Dockerfile ./pece-distro
+	docker build -t "pece-drupal:latest" -t "pece-drupal:$(BUILD_VERSION)" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_VER)" -f Dockerfile ./pece-distro
 
 .PHONY: docker-files
 docker-files: docker/traefik/acme.json docker/traefik/acme-test.json docker/crontab docker/wodby/nginx-preset.conf
