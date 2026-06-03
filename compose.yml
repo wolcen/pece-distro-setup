@@ -17,7 +17,7 @@ services:
       # - ./docker/database/init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
 
   php:
-    image: pece-drupal:latest
+    image: ${REGISTRY:+${REGISTRY}/}pece-drupal:${BUILD_VERSION}
     restart: always
     container_name: "${PROJECT_NAME}_php"
     environment:
@@ -78,7 +78,7 @@ services:
 
   crond:
     init: true
-    image: pece-drupal:latest
+    image: ${REGISTRY:+${REGISTRY}/}pece-drupal:${BUILD_VERSION}
     container_name: "${PROJECT_NAME}_crond"
     restart: always
     depends_on:
