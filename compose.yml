@@ -166,14 +166,15 @@ services:
       - ./docker/files/:/mnt/files/public
 
   solr:
-    image: bitnami/solr:$SOLR_TAG
+    image: wodby/solr:$SOLR_TAG
     container_name: "${PROJECT_NAME}_solr"
     restart: always
     environment:
       SOLR_CORES: drupal
       SOLR_HOST: "solr"
+      SOLR_CLOUD_PASSWORD: testing123
     volumes:
-      - ./docker/solr:/bitnami/solr
+      - ./docker/solr:/var/solr
     networks:
       - backend
 
