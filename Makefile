@@ -59,7 +59,7 @@ prepare:
 .PHONY: build
 build: pece-distro
 	@echo "Build $(PROJECT_NAME)..."
-	cd pece-distro && git pull origin && git checkout $(PROJECT_BRANCH) && cd -
+	cd pece-distro && git fetch origin $(PROJECT_BRANCH) && git checkout $(PROJECT_BRANCH) && git pull && cd -
 	cp docker/wodby/drupal10.settings.php.tmpl pece-distro/
 	docker build -t "pece-drupal:latest" -t "pece-drupal:$(BUILD_VERSION)" -t "pece-drupal:$(shell cd pece-distro && git describe --always --abbrev=8 HEAD)" --build-arg PHP_VER="$(PHP_VER)" -f Dockerfile ./pece-distro
 
