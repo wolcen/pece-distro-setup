@@ -31,6 +31,12 @@ compare:
 	rm .env.strip
 	rm .env.example.strip
 
+## pull	:	Pull the latest container versions
+##	Note: currently does not function when using a locally built container
+.PHONY: pull
+pull:
+	docker compose $(COMPOSE_FILES) pull
+
 ## update	:	Update PECE with latest available release.
 .PHONY: update
 update: prune
